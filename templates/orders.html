@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+<h2>Orders</h2>
+
+{% if session.role != "admin" %}
+<form method="post" class="mb-3">
+    <select name="product" class="form-select mb-1" required>
+        <option value="" disabled selected>Select Product</option>
+        {% for p in products %}
+        <option value="{{ p[0] }}">{{ p[1] }} (Stock: {{ p[3] }})</option>
+        {% endfor %}
+    </select>
+    <input name="qty" type="number" placeholder="Quantity" class="form-control mb-1" min="1" required>
+    <button class="btn btn-primary">Place Order</button>
+</form>
+{% endif %}
+
+<ul class="list-group">
+{% for o in orders %}
+    <li class="list-group-item">
+        User: {{ o[1] }}, Product: {{ o[2] }}, Qty: {{ o[3] }}
+    </li>
+{% endfor %}
+</ul>
+
+<a class="btn btn-secondary mt-3" href="/dashboard">Back</a>
+</body>
+</html>
